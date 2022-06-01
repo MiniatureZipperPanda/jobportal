@@ -1,0 +1,32 @@
+{%extends "base.html"%}
+{%block body_block%}
+<div class="row">
+    <div class="col-1"></div>
+    <div class="col-10">
+        <table class="table">
+            <tr>
+                <th>Job</th>
+                <th>Company</th>
+                <th>Location</th>
+                <th>Salary</th>
+            </tr>
+            {%for job in jobs%}
+            <tr>
+                <td>{{job.job_title}}</td>
+                <td>{{job.company_name}}</td>
+                <td>{{job.location}}</td>
+                <td>{{job.salary}}</td>
+                <td>
+                    <a href="{%url 'emp-job-detail' job.id %}" class="btn btn-outline-primary">View</a>
+                    <a href="{%url 'emp-job-edit' job.id %}" class="btn btn-outline-success">Edit</a>
+                    <a href="{%url 'emp-job-delete' job.id %}" class="btn btn-outline-danger">Delete</a>
+                </td>
+            </tr>
+            {%endfor%}
+
+
+        </table>
+    </div>
+    <div class="col-1"></div>
+</div>
+{%endblock%}
