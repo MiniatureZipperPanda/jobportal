@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, ListView, CreateView, DetailView, UpdateView, DeleteView, FormView
-from employer.forms import JobForm
-from employer.models import Jobs
+from employer.forms import JobForm, CompanyProfileForm
+from employer.models import Jobs, CompanyProfile
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from employer.forms import SignUpForm, LoginForm
@@ -143,3 +143,10 @@ class PasswordResetView(TemplateView):
             u.set_password(password1)
             u.save()
             return redirect("signin")
+
+
+class CompanyProfileView(CreateView):
+    model = CompanyProfile
+    form_class = CompanyProfileForm
+    template_name = "emp-add-profile.html"
+    success_url = reverse_lazy("emp-home")

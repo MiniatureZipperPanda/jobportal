@@ -1,5 +1,5 @@
 from django import forms
-from employer.models import Jobs
+from employer.models import Jobs, CompanyProfile
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
@@ -19,3 +19,9 @@ class SignUpForm(UserCreationForm):
 class LoginForm(forms.Form):
     user_name = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput())
+
+
+class CompanyProfileForm(forms.ModelForm):
+    class Meta:
+        model = CompanyProfile
+        exclude = ("user",)
