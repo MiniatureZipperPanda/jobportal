@@ -3,7 +3,8 @@ from django.urls import reverse_lazy
 from django.views.generic import TemplateView, ListView, CreateView, DetailView, UpdateView, DeleteView, FormView
 from employer.forms import JobForm, CompanyProfileForm
 from employer.models import Jobs, CompanyProfile
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
+from employer.models import User
 from django.contrib.auth import authenticate, login, logout
 from employer.forms import SignUpForm, LoginForm
 
@@ -17,6 +18,10 @@ class AddJobView(CreateView):
     form_class = JobForm
     template_name = "emp-add-job.html"
     success_url = reverse_lazy("emp-all-jobs")
+
+    def form_valid(self, form):
+        form.instance.company = self.request.user
+        return super().form_valid(form)
 
     # def get(self, request):
     #     form = JobForm
@@ -37,10 +42,13 @@ class ListJobView(ListView):
     context_object_name = "jobs"
     template_name = "emp-list-job.html"
 
-    # def get(self, request):
-    #     qs = Jobs.objects.all()
-    #     return render(request, "emp-list-job.html", {"jobs": qs})
-    #
+    def get_queryset(self):
+        return Jobs.objects.filter(company=self.request.user)
+
+
+# def get(self, request):
+#     qs = Jobs.objects.filter(company=request.user)
+#     return render(request, "emp-list-job.html", {"jobs": qs})
 
 
 class JobDetailView(DetailView):
@@ -91,7 +99,7 @@ class SignUpView(CreateView):
     model = Jobs
     form_class = SignUpForm
     template_name = "user-signup.html"
-    success_url = reverse_lazy("emp-all-jobs")
+    success_url = reverse_lazy("signin")
 
 
 class SignInView(FormView):
@@ -106,10 +114,12 @@ class SignInView(FormView):
             user = authenticate(request, username=uname, password=pwd)
             if user:
                 login(request, user)
-
-                return redirect("emp-all-jobs")
+                if request.user.role == "employer":
+                    return redirect("emp-all-jobs")
+                elif request.user.role == "candidate":
+                    return redirect("cand-home")
             else:
-                return render(request, "login.html", {"form": form})
+                return render(request, "cand-login.html", {"form": form})
 
 
 def sign_out_view(request, *args, **kwargs):
