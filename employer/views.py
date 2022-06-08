@@ -150,3 +150,28 @@ class CompanyProfileView(CreateView):
     form_class = CompanyProfileForm
     template_name = "emp-add-profile.html"
     success_url = reverse_lazy("emp-home")
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+    # def post(self, request, *args, **kwargs):
+    #     form = CompanyProfileForm(request.POST, files=request.FILES)
+    #     if form.is_valid():
+    #         form.instance.user = request.user
+    #         form.save()
+    #         return redirect("emp-home")
+    #     else:
+    #         return request, self.template_name, {"form": form}
+
+
+class EmpProfileView(TemplateView):
+    template_name = "emp-view-profile.html"
+
+
+class EmpEditProfileView(UpdateView):
+    model = CompanyProfile
+    form_class = CompanyProfileForm
+    template_name = "emp-edit-profile.html"
+    success_url = reverse_lazy("emp-profile-view")
+    pk_url_kwarg = "id"

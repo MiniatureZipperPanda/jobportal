@@ -13,7 +13,8 @@ urlpatterns = [
     path('users/account/sign-out', views.sign_out_view, name="sign-out"),
     path('users/account/change-password', views.ChangePasswordView.as_view(), name="chane-password"),
     path('users/account/password-reset', views.PasswordResetView.as_view(), name="password-reset"),
-    path('profile/add',views.CompanyProfileView.as_view(),name="emp-add-profile")
-
+    path('profile/add', views.CompanyProfileView.as_view(), name="emp-add-profile"),
+    path('profile/detail', views.EmpProfileView.as_view(), name="emp-profile-view"),
+    path('profile/edit/<int:id>', views.EmpEditProfileView.as_view(), name="emp-profile-edit")
 
 ]
