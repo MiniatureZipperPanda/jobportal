@@ -1,0 +1,31 @@
+{%extends 'candidate/base.html'%}
+{%block body_block%}
+<div class="row">
+    <div class="col-3"></div>
+    <div class="col-6 mt-3">
+        <div class="card shadow-lg p-3 mb-5 bg-white rounded" style="width: 55%;">
+            <img class="card-img-top" src="{{request.user.candidate.profile_pic.url}}" alt="NO image ">
+            <div class="card-body">
+
+                <p class="card-text"></p>
+                <h5 class="card-title">{{request.user.first_name }} {{request.user.last_name }}</h5>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"> {{request.user.skills}}</li>
+                <li class="list-group-item"> {{request.user.candidate.qualification}}</li>
+                <li class="list-group-item">Experience : {{request.user.candidate.experience}}</li>
+                <li class="list-group-item"> skills: {{request.user.candidate.skills}}</li>
+
+                <li class="list-group-item"> Resume: {{request.user.candidate.resume}}</li>
+            </ul>
+            <div class="card-body">
+
+                <a href="{%url 'cand-edit-profile' %}" class="card-link btn btn-outline-primary">EDIT</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-3"></div>
+</div>
+
+
+{%endblock%}

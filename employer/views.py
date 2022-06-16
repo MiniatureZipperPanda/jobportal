@@ -4,9 +4,11 @@ from django.views.generic import TemplateView, ListView, CreateView, DetailView,
 from employer.forms import JobForm, CompanyProfileForm
 from employer.models import Jobs, CompanyProfile
 # from django.contrib.auth.models import User
-from employer.models import User
+from employer.models import User, Application
 from django.contrib.auth import authenticate, login, logout
 from employer.forms import SignUpForm, LoginForm
+from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
 
 
 class EmployerHomeView(TemplateView):
@@ -21,6 +23,7 @@ class AddJobView(CreateView):
 
     def form_valid(self, form):
         form.instance.company = self.request.user
+        messages.success(self.request, "Your Job has been Added")
         return super().form_valid(form)
 
     # def get(self, request):
@@ -62,11 +65,12 @@ class JobDetailView(DetailView):
     #     return render(request, "emp-job-detail.html", {"job": qs})
 
 
-class JobEditView(UpdateView):
+class JobEditView(UpdateView, SuccessMessageMixin):
     model = Jobs
     form_class = JobForm
     template_name = "emp-job-edit.html"
     success_url = reverse_lazy("emp-all-jobs")
+    success_message = "your update done"
     pk_url_kwarg = "id"
 
     # def get(self, request, id):
@@ -163,6 +167,7 @@ class CompanyProfileView(CreateView):
 
     def form_valid(self, form):
         form.instance.user = self.request.user
+        messages.success(self.request, "Your profile has been Added")
         return super().form_valid(form)
 
     # def post(self, request, *args, **kwargs):
@@ -184,4 +189,20 @@ class EmpEditProfileView(UpdateView):
     form_class = CompanyProfileForm
     template_name = "emp-edit-profile.html"
     success_url = reverse_lazy("emp-profile-view")
+    pk_url_kwarg = "id"
+
+
+class EmpListApplicationsView(ListView):
+    model = Application
+    context_object_name = "applications"
+    template_name = "emp-app-list.html"
+
+    def get_queryset(self):
+        return Application.objects.filter(job=self.kwargs.get("id")).exclude(status="cancelled")
+
+
+class EmApplicationDetailView(DetailView):
+    model = Application
+    context_object_name = "application"
+    template_name = "emp-app-detail.html"
     pk_url_kwarg = "id"

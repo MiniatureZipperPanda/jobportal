@@ -15,6 +15,8 @@ urlpatterns = [
     path('users/account/password-reset', views.PasswordResetView.as_view(), name="password-reset"),
     path('profile/add', views.CompanyProfileView.as_view(), name="emp-add-profile"),
     path('profile/detail', views.EmpProfileView.as_view(), name="emp-profile-view"),
-    path('profile/edit/<int:id>', views.EmpEditProfileView.as_view(), name="emp-profile-edit")
+    path('profile/edit/<int:id>', views.EmpEditProfileView.as_view(), name="emp-profile-edit"),
+    path('applications/all/<int:id>', views.EmpListApplicationsView.as_view(), name="emp-app-list"),
+    path('applications/details/<int:id>', views.EmApplicationDetailView.as_view(), name="emp-app-detail")
 
 ]

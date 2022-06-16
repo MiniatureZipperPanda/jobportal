@@ -34,26 +34,20 @@ class CompanyProfile(models.Model):
     description = models.CharField(max_length=250)
 
 
-'''class SigninView(FormView):
-    form_class = LoginForm
-    template_name = "cand-login.html"
+class Application(models.Model):
+    applicant = models.ForeignKey(User, on_delete=models.CASCADE, related_name="applicant")
+    job = models.ForeignKey(Jobs, on_delete=models.CASCADE)
+    options = (
+        ("applied", "applied"),
+        ("accepted", "accepted"),
+        ("rejected", "rejected"),
+        ("pending", "pending"),
+        ("cancelled", "cancelled")
 
+    )
 
-    def post(self, request, *args, **kwargs):
-        form=LoginForm(request.POST)
-        if form.is_valid():
-            uname=form.cleaned_data.get("username")
-            pwd=form.cleaned_data.get("password")
-            user=authenticate(request,username=uname,password=pwd)
-            if user:
-                login(request,user)
+    status = models.CharField(max_length=120, choices=options, default="applied")
+    date = models.DateTimeField(auto_now_add=True)
 
-                return redirect("all-jobs")
-            else:
-                return  render(request,"cand-login.html",{"form":form})
-
-
-
-def signout_view(request,args,*kwargs):
-    logout(request)
-    return redirect("signin") '''
+    # class Meta:
+    #     unique_together = ("applicant", "job")

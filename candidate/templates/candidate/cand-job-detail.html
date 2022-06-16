@@ -1,19 +1,19 @@
-{%extends "base.html"%}
+{%extends 'candidate/base.html'%}
 {%block body_block%}
 <div class="row">
     <div class="col-2"></div>
     <div class="col-8">
         <div class="card text-center">
-            <div class="card-header" >
-               <h3> {{job.job_title}} </h3>
+            <div class="card-header">
+                <h3> {{job.job_title}} </h3>
 
             </div>
             <div class="card-body">
 
-                    Company:{{job.company_name}}
+                Company:{{job.company_name}}
 
                 <p class="card-text">
-                   Location: {{job.location}}
+                    Location: {{job.location}}
                 </p>
                 <p class="card-text">
                     Salary:{{job.salary}}
@@ -21,7 +21,14 @@
                 <p class="card-text">
                     Experience: {{job.experience}}
                 </p>
-                <a href="{%url 'emp-app-list' job.id%}" class="btn btn-outline-primary"> view applications </a>
+                {%if is_applied%}
+                                <a href="" class="btn btn-outline-success"> Applied</a>
+
+                {%else%}
+                                <a href="{%url 'apply-now' job.id%}" class="btn btn-outline-primary"> Apply</a>
+
+                {%endif%}
+
             </div>
 
         </div>

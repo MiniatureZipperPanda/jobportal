@@ -9,6 +9,9 @@
     <meta name="generator" content="Hugo 0.98.0">
     <title>Candidate</title>
 
+<!--    font Awesome-->
+    <script src="https://kit.fontawesome.com/cdea74a3bd.js" crossorigin="anonymous"></script>
+
     <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/sticky-footer-navbar/">
 
 
@@ -66,6 +69,9 @@
         -webkit-overflow-scrolling: touch;
       }
 
+
+
+
     </style>
 
 
@@ -78,7 +84,7 @@
     <!-- Fixed navbar -->
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">JobZ</a>
+            <a class="navbar-brand" href="{%url 'cand-home'%}">JobZ</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
                     aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -89,16 +95,28 @@
                         <a class="nav-link active" aria-current="page" href="{%url 'cand-home'%}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">Link</a>
+                        <a class="nav-link active" href="{%url 'cand-job-list'%}">list job</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="{%url 'cand-add-profile'%}">Profile</a>
+                        {%if request.user.candidate %}
+                        <a class="nav-link active" href="{%url 'cand-detail-profile'%}">Profile</a>
+
+                        {%else%}
+                        <a class="nav-link active" href="{%url 'cand-add-profile'%}"> A Profile</a>
+
+                        {%endif%}
+
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{%url 'cand-applications'%}">My Applications</a>
                     </li>
                 </ul>
                 <form class="d-flex" role="search">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
+                <a class="ms-2 btn btn-outline-danger" href="{%url 'cand-log-out'%}">Log Out</a>
+
             </div>
         </div>
     </nav>
@@ -114,8 +132,54 @@
 </main>
 
 <footer class="footer mt-auto py-3 bg-light">
-    <div class="container">
-        <span class="text-muted">Place sticky footer content here.</span>
+    <div class="">
+
+        <footer class="bg-dark text-center text-white">
+  <!-- Grid container -->
+  <div class="container p-4  pb-0">
+    <!-- Section: Social media -->
+    <section class="mb-3">
+      <!-- Facebook -->
+      <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+        ><i class="fab fa-facebook-f"></i
+      ></a>
+
+      <!-- Twitter -->
+      <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+        ><i class="fab fa-twitter"></i
+      ></a>
+
+      <!-- Google -->
+      <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+        ><i class="fab fa-google"></i
+      ></a>
+
+      <!-- Instagram -->
+      <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+        ><i class="fab fa-instagram"></i
+      ></a>
+
+      <!-- Linkedin -->
+      <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+        ><i class="fab fa-linkedin-in"></i
+      ></a>
+
+      <!-- Github -->
+      <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+        ><i class="fab fa-github"></i
+      ></a>
+    </section>
+    <!-- Section: Social media -->
+  </div>
+  <!-- Grid container -->
+
+  <!-- Copyright -->
+  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+    © 2022 Copyright:
+    <a class="text-white " style="text-decoration:none" href="{% url 'cand-home'%}">JobZ</a>
+  </div>
+  <!-- Copyright -->
+</footer>
     </div>
 </footer>
 

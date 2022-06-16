@@ -1,0 +1,32 @@
+{%extends 'candidate/base.html'%}
+{%block body_block%}
+{%for application in applications%}
+<div class="row">
+    <div class="col-4">
+        <div>
+            Job Title: {{application.job.job_title}}
+        </div>
+        <div>
+            Company: {{application.job.company}}
+        </div>
+        <div>
+            Salary: {{application.job.salary}}
+        </div>
+    </div>
+    <div class="col-4">
+        <div>
+            Status: {{application.status}}
+        </div>
+        <div>
+            Date : {{application.date}}
+        </div>
+    </div>
+    <div class="col-4">
+        <div>
+            <a href="{%url 'cand-cancel-application' application.id%}" class="btn btn-outline-danger"> Cancel</a>
+        </div>
+    </div>
+</div>
+
+{%endfor%}
+{%endblock%}
