@@ -201,7 +201,7 @@ class EmpListApplicationsView(ListView):
         return Application.objects.filter(job=self.kwargs.get("id")).exclude(status="cancelled")
 
 
-class EmApplicationDetailView(DetailView):
+class EmpApplicationDetailView(DetailView):
     model = Application
     context_object_name = "application"
     template_name = "emp-app-detail.html"
